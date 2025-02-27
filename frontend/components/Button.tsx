@@ -56,13 +56,11 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
   },
-  // Default button style (Login Button)
   defaultButton: {
     backgroundColor: '#FFFFFF',
     borderWidth: 1,
     borderColor: '#432C81',
   },
-  // Primary button style (Sign Up Button)
   primaryButton: {
     backgroundColor: '#432C81',
     borderWidth: 4,
