@@ -4,10 +4,11 @@ import { Link, useRouter } from 'expo-router' /*Navigate routes*/
 type Props = {
   label: string;
   theme?: 'primary';
-  href: string;
+  href?: string;
+  onPress?: () => void;
 };
 
-export default function Button({ label, theme, href }: Props) {
+export default function Button({ label, theme, href, onPress }: Props) {
     const router = useRouter();
   
     return (
@@ -17,7 +18,13 @@ export default function Button({ label, theme, href }: Props) {
           styles.button,
           theme === 'primary' ? styles.primaryButton : styles.defaultButton,
         ]}
-        onPress={() => router.push(href as any)}
+        onPress={() => {
+          if (onPress) {
+            onPress();
+          } else if (href) {
+            router.push(href as any);
+          }
+        }}
       >
         <Text
           style={[
@@ -63,6 +70,7 @@ const styles = StyleSheet.create({
   },
   buttonLabel: {
     fontSize: 16,
+    fontFamily: 'Raleway',
   },
   defaultButtonText: {
     color: '#432C81',

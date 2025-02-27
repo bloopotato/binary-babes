@@ -8,10 +8,10 @@ export default function TabLayout() {
                 tabBarActiveTintColor: '#432C81',
                 tabBarInactiveTintColor: '#A095C1',
                 headerStyle: {
-                    backgroundColor: '#25292e',
+                    backgroundColor: '#FFFFFF',
                 },
                 headerShadowVisible: false,
-                headerTintColor: '#fff',
+                headerTintColor: '#432C81',
                 tabBarStyle: {
                     backgroundColor: '#FFFFFF',
                 },
@@ -21,8 +21,19 @@ export default function TabLayout() {
             name="home" 
             options={{ 
                 title: 'Home',
+                headerShown: false,
                 tabBarIcon: ({ color, focused }) => (
                     <Ionicons name={focused ? 'home-sharp' : 'home-outline'} color={color} size={24} />
+                )
+            }} 
+        />
+        <Tabs.Screen 
+            name="stats" 
+            options={{ 
+                title: 'Statistics',
+                headerShadowVisible: false,
+                tabBarIcon: ({ color, focused }) => (
+                    <Ionicons name={focused ? 'bar-chart' : 'bar-chart-outline'} color={color} size={24}/>
                 )
             }} 
         />
@@ -30,8 +41,9 @@ export default function TabLayout() {
             name="notifications" 
             options={{ 
                 title: 'Notifications',
+                headerShadowVisible: false,
                 tabBarIcon: ({ color, focused }) => (
-                    <Ionicons name={focused ? 'information-circle' : 'information-circle-outline'} color={color} size={24}/>
+                    <Ionicons name={focused ? 'notifications' : 'notifications-outline'} color={color} size={24}/>
                 )
             }} 
         />
@@ -39,8 +51,9 @@ export default function TabLayout() {
             name="settings" 
             options={{ 
                 title: 'Settings',
+                headerShadowVisible: false,
                 tabBarIcon: ({ color, focused }) => (
-                    <Ionicons name={focused ? 'information-circle' : 'information-circle-outline'} color={color} size={24}/>
+                    <Ionicons name={focused ? 'settings' : 'settings-outline'} color={color} size={24}/>
                 )
             }} 
         />

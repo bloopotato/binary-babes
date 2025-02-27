@@ -1,10 +1,10 @@
 import { Text, View, StyleSheet } from 'react-native';
 import { Link } from 'expo-router' /*Navigate routes*/
 
-export default function HomeScreen() {
+export default function Statistics() {
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>Home screen</Text>
+      <Text style={styles.text}>Profile screen</Text>
       <Link href='/' style={styles.button}>
         Go to Login Screen
       </Link>

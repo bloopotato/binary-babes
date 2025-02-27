@@ -1,5 +1,6 @@
-import { Text, View, StyleSheet, ImageComponent } from 'react-native';
-import { Link } from 'expo-router' /*Navigate routes*/
+import { Text, View, StyleSheet } from 'react-native';
+import { useState } from 'react';
+
 
 import Button from '@/components/Button';
 import ImageViewer from '@/components/ImageViewer';
@@ -14,8 +15,8 @@ export default function Index() {
         <ImageViewer imgSource={PlaceholderImage} />
       </View>
       <View style={styles.footerContainer}>
-        <Button theme="primary" label="Sign up" href="/home" />
-        <Button label="Login" href="/home" />
+        <Button theme="primary" label="Sign up" href="main/signup" />
+        <Button label="Login" href="main/login" />
       </View>
     </View>
   );
@@ -30,6 +31,7 @@ const styles = StyleSheet.create({
   },
   text: {
     color: '#432C81',
+    fontFamily: "Raleway"
   },
   imageContainer: {
     flex: 1,

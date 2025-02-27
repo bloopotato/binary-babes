@@ -5,7 +5,7 @@ export default function Notifications() {
   return (
     <View style={styles.container}>
       <Text style={styles.text}>Notifications</Text>
-      <Link href='/home' style={styles.button}>
+      <Link href='/(tabs)/home' style={styles.button}>
         Go to Home Screen
       </Link>
     </View>
@@ -15,12 +15,12 @@ export default function Notifications() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#25292e',
+    backgroundColor: '#FFFFFF',
     alignItems: 'center',
     justifyContent: 'center',
   },
   text: {
-    color: '#fff',
+    color: '#432C81',
   },
   button: {
     fontSize: 20,
