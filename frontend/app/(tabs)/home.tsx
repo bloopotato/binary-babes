@@ -5,7 +5,7 @@ export default function HomeScreen() {
   return (
     <View style={styles.container}>
       <Text style={styles.text}>Home screen</Text>
-      <Link href='/' style={styles.button}>
+      <Link href='/onboarding/onboardingPage' style={styles.button}>
         Go to Login Screen
       </Link>
     </View>

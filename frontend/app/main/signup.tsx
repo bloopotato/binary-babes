@@ -56,7 +56,7 @@ export default function Signup() {
 
     if (valid) {
       console.log('Signup successful');
-      router.push('/(tabs)/home');
+      router.push('/onboarding/onboardingPage');
     }
   };
 
