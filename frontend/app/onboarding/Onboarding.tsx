@@ -1,6 +1,5 @@
 import React, { useState, useRef } from "react";
 import { View, Text, StyleSheet, FlatList, Animated, ViewToken, TouchableOpacity } from "react-native";
-import { useNavigation } from "expo-router";
 import { useRouter } from "expo-router";
 
 import slides from "@/app/onboarding/slides";

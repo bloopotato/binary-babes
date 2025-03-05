@@ -1,13 +1,32 @@
-import { Text, View, StyleSheet } from "react-native";
+import { Text, View, StyleSheet, Image } from "react-native";
 import { Link } from 'expo-router'
+import LifestyleTab from "@/components/LifestyleTabs";
 
 export default function LifestyleMedical() {
+  const picture = require('@/assets/images/plant.png');
+
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>Lifestyle & Medical History</Text>
-      <Link href='/(tabs)/home' style={styles.button}>
-        Go to Home Screen
-      </Link>
+      <View style={styles.top}>
+        <View style={styles.header}>
+          <View style={styles.textBox}>
+            <Text style={styles.headerText}>Lifestyle & Medical History</Text>
+          </View>
+          <Image source={picture} style={styles.picture} resizeMode="contain"/>
+        </View>
+      </View>
+      <View style={styles.bot}>
+        <View style={styles.tabs}>
+          <LifestyleTab label="Diet & Substance Use"/>
+          <LifestyleTab label="Sleep Habits"/>
+          <LifestyleTab label="Fitness Levels"/>
+          <LifestyleTab label="Stress Levels"/>
+          <LifestyleTab label="Medical History"/>
+          <LifestyleTab label="Customised Plan"/>
+        </View>
+      </View>
+      
+      
     </View>
   );
 }
@@ -19,12 +38,48 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  text: {
-    color: '#432C81',
+  top: {
+    flex: 1,
+    justifyContent: 'center',
+    alignContent: 'center'
   },
-  button: {
+  header: {
+    flexDirection: 'row',
+    width: 343,
+    height: 163,
+    backgroundColor: '#EDECF4',
+    borderRadius: 12,
+    padding: 20,
+    justifyContent: 'space-between',
+    alignItems: 'center'
+  },
+  textBox: {
+    width: 200,
+  },
+  headerText: {
+    fontFamily: 'Raleway',
     fontSize: 20,
-    textDecorationLine: 'underline',
+    fontWeight: 'bold',
     color: '#432C81',
-  }
+    marginRight: 10,
+  },
+  picture: {
+    width: 100,
+    height: 100
+  },
+  bot: {
+    flexShrink: 1,
+    justifyContent: 'center',
+    backgroundColor: '#EDECF4',
+    borderTopLeftRadius: 12,
+    borderTopRightRadius: 12
+  },
+  tabs: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    width: '100%',
+    justifyContent: 'space-around',
+    paddingHorizontal: 10,
+    paddingVertical: 20
+  },
 });

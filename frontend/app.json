@@ -37,6 +37,8 @@
         "expo-font",
         {
           "Raleway": ["./assets/fonts/Raleway-VariableFont_wght.ttf"],
+          "Raleway-Reg": ["./assets/fonts/Raleway-Regular.ttf"],
+          "Raleway-Bold": ["./assets/fonts/Raleway-Bold.ttf"],
           "Inter": ["./assets/fonts/Inter-VariableFont_opsz,wght.ttf"]
         }
       ]
