@@ -14,9 +14,9 @@ export default function Index() {
         <Text style={styles.textTitle}>Self Care</Text>
       </View>
       
-      <View style={styles.imageContainer}>
+      {/*<View style={styles.imageContainer}>
         <ImageViewer imgSource={PlaceholderImage} />
-      </View>
+      </View>*/}
 
       <View style={styles.footerContainer}>
         <Button theme="primary" label="Sign up" href="main/signup" />
@@ -47,8 +47,9 @@ const styles = StyleSheet.create({
   },
   text: {
     color: '#432C81',
-    fontFamily: "Raleway-Bold",
+    fontFamily: "Raleway",
     fontSize: 20,
+    fontWeight: 'bold',
     lineHeight: 26, 
     wordWrap: 'break-word',
   },
@@ -56,7 +57,8 @@ const styles = StyleSheet.create({
     textAlign: 'center', 
     color: '#432C81', 
     fontSize: 32, 
-    fontFamily: 'Raleway-Bold', 
+    fontFamily: 'Raleway',
+    fontWeight: 'bold',
     lineHeight: 42, 
     wordWrap: 'break-word',
   },
