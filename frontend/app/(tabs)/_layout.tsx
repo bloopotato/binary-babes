@@ -18,7 +18,7 @@ export default function TabLayout() {
             }}
         >
         <Tabs.Screen 
-            name="home" 
+            name='home' 
             options={{ 
                 title: 'Home',
                 headerShown: false,
@@ -28,7 +28,7 @@ export default function TabLayout() {
             }} 
         />
         <Tabs.Screen 
-            name="stats" 
+            name='stats' 
             options={{ 
                 title: 'Statistics',
                 headerShown: false,
@@ -39,7 +39,7 @@ export default function TabLayout() {
             }} 
         />
         <Tabs.Screen 
-            name="notifications" 
+            name='notifications'
             options={{ 
                 title: 'Notifications',
                 headerShadowVisible: false,
@@ -49,7 +49,7 @@ export default function TabLayout() {
             }} 
         />
         <Tabs.Screen 
-            name="settings" 
+            name='settings' 
             options={{ 
                 title: 'Settings',
                 headerShadowVisible: false,

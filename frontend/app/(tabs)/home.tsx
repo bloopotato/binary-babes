@@ -13,7 +13,7 @@ export default function HomeScreen() {
 
   const cards = [
     { name: 'Lifestyle & Medical History', key: '1', route: '/cards/lifestyle-medical', image: lifestyleImage },
-    { name: 'Treatment', key: '2', route: '/treatment', image: treatmentImage },
+    { name: 'Treatment', key: '2', route: '/cards/treatment', image: treatmentImage },
     { name: 'ChatBot', key: '3', route: '/cards/chatbot', image: chatbotImage },
     { name: 'Help', key: '4', route: '/help', image: helpImage },
     { name: 'Settings', key: '5', route: '/settings' },

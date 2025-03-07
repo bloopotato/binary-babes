@@ -1,6 +1,6 @@
-import React from "react";
-import { View, Text, StyleSheet, ScrollView } from "react-native";
-import LineChartComponent from "@/components/LineChartComponent"; // Import the reusable component
+import React from 'react';
+import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import LineChartComponent from '@/components/LineChartComponent';
 
 export default function StatsScreen() {
   // Data for different charts
@@ -43,7 +43,7 @@ export default function StatsScreen() {
             data={data1}
             width={283}
             height={150}
-            lineColor="#432C81"
+            lineColor='#432C81'
           />
         </View>
         <View style={styles.chart}>
@@ -52,7 +52,7 @@ export default function StatsScreen() {
             data={data2}
             width={283}
             height={150}
-            lineColor="#432C81"
+            lineColor='#432C81'
           />
         </View>
         <View style={styles.chart}>
@@ -61,7 +61,7 @@ export default function StatsScreen() {
             data={data3}
             width={283}
             height={150}
-            lineColor="#432C81"
+            lineColor='#432C81'
           />
         </View>
       </ScrollView>

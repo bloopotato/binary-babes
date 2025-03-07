@@ -100,7 +100,7 @@ export default function Signup() {
       
       
       <View style={styles.footerContainer}>
-        <Button theme="primary" label="Sign Up" onPress={handleSignupPress} />
+        <Button theme='primary' label='Sign Up' onPress={handleSignupPress} />
       </View>
       <View style={styles.loginContainer}>
         <Text style={styles.text}>Already have an account? </Text>
@@ -122,10 +122,10 @@ const styles = StyleSheet.create({
   },
   header: {
     color: '#432C81',
-    fontFamily: "Raleway",
-    fontWeight: "bold",
+    fontFamily: 'Raleway',
+    fontWeight: 'bold',
     fontSize: 32,
-    textAlign: "center",
+    textAlign: 'center',
     marginBottom: 20,
   },
   loginContainer: {

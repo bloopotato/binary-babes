@@ -22,19 +22,19 @@ export default function Login() {
       <CustomTextInput
         value={email}
         onChangeText={setEmail}
-        placeholder="Email"
+        placeholder='Email'
       />
       <CustomTextInput
         value={password}
         onChangeText={setPassword}
         secureTextEntry={true}
-        placeholder="Password"
+        placeholder='Password'
       />
 
       {error ? <Text style={styles.errorMessage}>{error}</Text> : null }
       
       <View style={styles.footerContainer}>
-        <Button theme="primary" label="Login" onPress={handleLoginPress} />
+        <Button theme='primary' label='Login' onPress={handleLoginPress} />
       </View>
       <View style={styles.signupContainer}>
         <Text style={styles.text}>Don't have an account? </Text>

@@ -1,26 +1,24 @@
 import { Text, View, StyleSheet, Image } from 'react-native';
 import Tabs from '@/components/Tabs';
 
-export default function LifestyleMedical() {
-  const picture = require('@/assets/images/plant.png');
+export default function Treatment() {
+  const picture = require('@/assets/images/treatment.png');
 
   return (
     <View style={styles.container}>
       <View style={styles.top}>
         <View style={styles.header}>
           <View style={styles.textBox}>
-            <Text style={styles.headerText}>Lifestyle & Medical History</Text>
+            <Text style={styles.headerText}>Treatment</Text>
           </View>
           <Image source={picture} style={styles.picture} resizeMode='contain'/>
         </View>
       </View>
       <View style={styles.bot}>
         <View style={styles.tabs}>
-          <Tabs label='Diet'/>
-          <Tabs label='Fitness Levels'/>
-          <Tabs label='Stress Levels'/>
-          <Tabs label='Medical History'/>
-          <Tabs label='Customised Plan' href='./customised-plan' width={347}/>
+          <Tabs label='Current Medication' width={343} />
+          <Tabs label='Current Symptoms' width={343} />
+          <Tabs label='Appointment & Medication Schedule' href='/app/cards/customised-plan' width={343} />
         </View>
       </View>
       
@@ -67,16 +65,17 @@ const styles = StyleSheet.create({
   },
   bot: {
     flexShrink: 1,
+    width: '100%',
     justifyContent: 'center',
+    alignItems: 'center',
     backgroundColor: '#EDECF4',
     borderTopLeftRadius: 12,
     borderTopRightRadius: 12
   },
   tabs: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
+    flexDirection: 'column',
     width: '100%',
-    justifyContent: 'space-around',
+    alignItems: 'center',
     paddingHorizontal: 10,
     paddingVertical: 20
   },
