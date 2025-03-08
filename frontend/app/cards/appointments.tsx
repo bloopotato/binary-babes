@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import { Agenda } from 'react-native-calendars';
+import { Agenda, Calendar } from 'react-native-calendars';
 
 interface Day {
   dateString: string;
@@ -88,13 +88,40 @@ const Appointments = () => {
         onDayPress={onDayPress} 
         showClosingKnob
         renderItem={(item: Event) => (
-          <View style={[styles.item, item.type === 'Appointment' ? styles.appointment : styles.medication]}>
+          <View style={styles.item}>
+            <Text style={styles.itemTitle}>
+              {item.time} {item.type}
+            </Text>
             <Text style={styles.itemText}>
-              {item.time} - {item.name}
+              {item.name}
             </Text>
           </View>
         )}
         renderEmptyDate={() => <View></View>}
+        theme={{
+          calendarBackground: '#FFF',
+          agendaKnobColor: '#EDECF4',
+
+          textSectionTitleColor: '#432C81',
+          textDayHeaderFontFamily: 'Raleway-Bold',
+        
+          textDayFontFamily: 'Raleway',
+          dayTextColor: '#7B6BA8',
+          textDisabledColor: '#EDECF4',
+          todayTextColor: '#432C81',
+          
+          selectedDayBackgroundColor: '#432C81',
+          selectedDayTextColor: '#EDECF4',
+
+          textMonthFontFamily: 'Raleway-Bold',
+          monthTextColor: '#432C81',
+
+          agendaDayTextColor: '#A095C1',
+          agendaDayNumColor: '#A095C1',
+          agendaTodayColor: '#432C81',
+
+          dotColor: '#432C81'
+        }}
       />
     </View>
   );
@@ -107,20 +134,19 @@ const styles = StyleSheet.create({
   },
   item: { 
     padding: 20, 
-    borderRadius: 5, 
-    marginVertical: 5, 
-    marginHorizontal: 10 
+    borderRadius: 5,
+    backgroundColor: '#56428F',
+    marginRight: 15,
+    marginVertical: 5
   },
-  appointment: { 
-    backgroundColor: '#56428F' 
-  }, 
-  medication: { 
-    backgroundColor: '#7B6BA8' 
-  }, 
+  itemTitle: { 
+    fontSize: 16,
+    fontFamily: 'Raleway-Bold',
+    color: '#EDECF4'
+  },
   itemText: { 
     fontSize: 14,
     fontFamily: 'Raleway',
-    fontWeight: 'bold',
     color: '#EDECF4'
   },
 });

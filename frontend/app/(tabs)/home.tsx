@@ -1,30 +1,38 @@
-import { View, StyleSheet, FlatList, Text, Image } from 'react-native';
+import { View, StyleSheet, FlatList, Text, Image, TouchableOpacity } from 'react-native';
+import { useRouter } from 'expo-router';
 import Card from '@/components/Card';
 
-const profile = require('@/assets/images/profile.jpg');
+const profileIcon = require('@/assets/images/profile.jpg');
 
 export default function HomeScreen() {
   const username = "Julia";
+  const router = useRouter();
 
   const lifestyleImage = require('@/assets/images/plant.png');
   const treatmentImage = require('@/assets/images/treatment.png');
   const chatbotImage = require('@/assets/images/chatbot.png');
   const helpImage = require('@/assets/images/help.png');
+  const aboutImage = require('@/assets/images/about.png');
 
   const cards = [
     { name: 'Lifestyle & Medical History', key: '1', route: '/cards/lifestyle-medical', image: lifestyleImage },
     { name: 'Treatment', key: '2', route: '/cards/treatment', image: treatmentImage },
     { name: 'ChatBot', key: '3', route: '/cards/chatbot', image: chatbotImage },
-    { name: 'Help', key: '4', route: '/help', image: helpImage },
-    { name: 'Settings', key: '5', route: '/settings' },
-    { name: 'About', key: '6', route: '/about' }
+    { name: 'Help', key: '4', image: helpImage },
+    { name: 'About', key: '5', image: aboutImage }
   ];
+
+  const goToProfile = () => {
+    router.push('./settings');
+  }
 
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.greeting}>👋 Hi {username}!</Text>
-        <Image source={profile} style={styles.profileImage} />
+        <Text style={styles.headerText}>👋 Hi {username}!</Text>
+        <TouchableOpacity style={styles.profileCircle} onPress={goToProfile}>
+          <Image source={profileIcon} style={styles.profileImage} />
+        </TouchableOpacity>
       </View>
       <FlatList
         data={cards}
@@ -49,20 +57,27 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     height: 100,
     width: '100%',
-    paddingHorizontal: 30,
+    paddingHorizontal: 16,
     justifyContent: 'space-between',
     alignItems: 'center',
   },
-  greeting: {
+  headerText: {
     fontSize: 22,
-    fontFamily: 'Raleway',
-    fontWeight: 'bold',
+    fontFamily: 'Raleway-Bold',
     color: '#432C81',
   },
+  profileCircle: {
+    width: 46,
+    height: 46,
+    borderRadius: 23,
+    backgroundColor: '#EDECF4',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
   profileImage: {
-    width: 50,
-    height: 50,
-    borderRadius: 25,
+    width: 30,
+    height: 30,
+    borderRadius: 15,
   },
   listContainer: {
     paddingBottom: 10,

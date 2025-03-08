@@ -18,7 +18,7 @@ export default function Treatment() {
         <View style={styles.tabs}>
           <Tabs label='Current Medication' width={343} />
           <Tabs label='Current Symptoms' width={343} />
-          <Tabs label='Appointment & Medication Schedule' href='/app/cards/customised-plan' width={343} />
+          <Tabs label='Appointment & Medication Schedule' href='./appointments' width={343} />
         </View>
       </View>
       
@@ -42,10 +42,10 @@ const styles = StyleSheet.create({
   header: {
     flexDirection: 'row',
     width: 343,
-    height: 163,
+    height: 116,
     backgroundColor: '#EDECF4',
     borderRadius: 12,
-    padding: 20,
+    padding: 16,
     justifyContent: 'space-between',
     alignItems: 'center'
   },
@@ -53,11 +53,9 @@ const styles = StyleSheet.create({
     width: 200,
   },
   headerText: {
-    fontFamily: 'Raleway',
+    fontFamily: 'Raleway-Bold',
     fontSize: 20,
-    fontWeight: 'bold',
     color: '#432C81',
-    marginRight: 10,
   },
   picture: {
     width: 100,

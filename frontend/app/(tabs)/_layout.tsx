@@ -15,6 +15,12 @@ export default function TabLayout() {
                 tabBarStyle: {
                     backgroundColor: '#FFFFFF',
                 },
+                tabBarLabelStyle: {
+                    fontFamily: 'Raleway'
+                },
+                headerTitleStyle: {
+                    fontFamily: 'Raleway-Bold'
+                }
             }}
         >
         <Tabs.Screen 
@@ -42,7 +48,7 @@ export default function TabLayout() {
             name='notifications'
             options={{ 
                 title: 'Notifications',
-                headerShadowVisible: false,
+                headerShown: false,
                 tabBarIcon: ({ color, focused }) => (
                     <Ionicons name={focused ? 'notifications' : 'notifications-outline'} color={color} size={24}/>
                 )
@@ -52,7 +58,7 @@ export default function TabLayout() {
             name='settings' 
             options={{ 
                 title: 'Settings',
-                headerShadowVisible: false,
+                headerShown: false,
                 tabBarIcon: ({ color, focused }) => (
                     <Ionicons name={focused ? 'settings' : 'settings-outline'} color={color} size={24}/>
                 )

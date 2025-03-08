@@ -3,7 +3,6 @@ import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import LineChartComponent from '@/components/LineChartComponent';
 
 export default function StatsScreen() {
-  // Data for different charts
   const data1 = [
     { value: 50, date: "Jan" },
     { value: 80, date: "Feb" },
@@ -81,14 +80,16 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     height: 100,
     width: '100%',
-    paddingHorizontal: 30,
+    paddingHorizontal: 16,
     justifyContent: 'space-between',
     alignItems: 'center',
+    fontSize: 22,
+    fontFamily: 'Raleway-Bold',
+    color: '#432C81'
   },
   headerText: {
     fontSize: 22,
-    fontFamily: 'Raleway',
-    fontWeight: 'bold',
+    fontFamily: 'Raleway-Bold',
     color: '#432C81',
   },
   scrollViewContent: {
@@ -103,9 +104,8 @@ const styles = StyleSheet.create({
     borderRadius: 15,
   },
   title: {
-    fontFamily: 'Raleway',
+    fontFamily: 'Raleway-Bold',
     fontSize: 18,
-    fontWeight: "bold",
     color: '#432C81',
     marginBottom: 10,
   },

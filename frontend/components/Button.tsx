@@ -1,5 +1,5 @@
 import { StyleSheet, View, Pressable, Text } from 'react-native';
-import { Link, useRouter } from 'expo-router' /*Navigate routes*/
+import { useRouter } from 'expo-router'
 
 type Props = {
   label: string;

@@ -16,7 +16,7 @@ export default function LifestyleMedical() {
       </View>
       <View style={styles.bot}>
         <View style={styles.tabs}>
-          <Tabs label='Diet'/>
+          <Tabs label='Diet & Substance Use'/>
           <Tabs label='Fitness Levels'/>
           <Tabs label='Stress Levels'/>
           <Tabs label='Medical History'/>
@@ -55,9 +55,8 @@ const styles = StyleSheet.create({
     width: 200,
   },
   headerText: {
-    fontFamily: 'Raleway',
+    fontFamily: 'Raleway-Bold',
     fontSize: 20,
-    fontWeight: 'bold',
     color: '#432C81',
     marginRight: 10,
   },

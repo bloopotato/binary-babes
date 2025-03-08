@@ -56,7 +56,7 @@ export default function Signup() {
 
     if (valid) {
       console.log('Signup successful');
-      router.push('/onboarding/onboardingPage');
+      router.push('./onboardingPage');
     }
   };
 
@@ -122,8 +122,7 @@ const styles = StyleSheet.create({
   },
   header: {
     color: '#432C81',
-    fontFamily: 'Raleway',
-    fontWeight: 'bold',
+    fontFamily: 'Raleway-Bold',
     fontSize: 32,
     textAlign: 'center',
     marginBottom: 20,

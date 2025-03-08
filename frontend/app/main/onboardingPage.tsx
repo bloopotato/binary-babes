@@ -3,14 +3,14 @@ import React, { useLayoutEffect } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { useNavigation } from 'expo-router';
 
-import Onboarding from './Onboarding';
+import Onboarding from '../onboarding/Onboarding';
 
 export default function OnboardingPage() {
     const navigation = useNavigation();
 
     useLayoutEffect(() => {
         navigation.setOptions({
-          headerShown: false, // Hide the header dynamically
+          headerShown: false, 
         });
       }, [navigation]);
 
@@ -25,7 +25,7 @@ export default function OnboardingPage() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff',
+        backgroundColor: '#FFF',
         alignItems: 'center',
         justifyContent: 'center'
     }

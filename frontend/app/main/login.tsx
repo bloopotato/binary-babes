@@ -56,16 +56,14 @@ const styles = StyleSheet.create({
   },
   header: {
     color: '#432C81',
-    fontFamily: "Raleway",
-    fontWeight: "bold",
+    fontFamily: "Raleway-Bold",
     fontSize: 32,
     textAlign: "center",
     marginBottom: 20,
   },
   subheader: {
     color: '#432C81',
-    fontFamily: "Raleway",
-    fontWeight: "bold",
+    fontFamily: "Raleway-Bold",
     fontSize: 20,
     textAlign: "center",
     marginBottom: 10,
@@ -94,7 +92,7 @@ const styles = StyleSheet.create({
   errorMessage: {
     color: '#EB5858',
     fontSize: 14,
-    fontFamily: 'Inter',
+    fontFamily: 'Raleway',
     textAlign: 'left',
     marginTop: 10,
   }

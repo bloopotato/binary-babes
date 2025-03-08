@@ -34,11 +34,10 @@ const styles = StyleSheet.create({
         justifyContent: 'center'
     },
     title: {
-        fontWeight: 'bold',
         fontSize: 32,
         marginBottom: 10,
         color: '#432C81',
-        fontFamily: 'Raleway',
+        fontFamily: 'Raleway-Bold',
         textAlign: 'center'
     },
     description: {

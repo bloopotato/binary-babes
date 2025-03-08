@@ -33,14 +33,14 @@ export default function Card({ title, href, image, onPress }: CardProps) {
 
 const styles = StyleSheet.create({
     listContainer: {
-        paddingVertical: 20,
+        paddingVertical: 16,
     },
     card: {
         flexDirection: 'row',
         backgroundColor: '#edebf3',
-        padding: 20,
-        marginVertical: 10,
-        borderRadius: 10,
+        padding: 16,
+        marginVertical: 8,
+        borderRadius: 12,
         alignItems: 'center',
         justifyContent: 'space-between',
         width: 343,
@@ -51,9 +51,8 @@ const styles = StyleSheet.create({
     },
     text: {
         fontSize: 20,
-        fontFamily: 'Raleway',
+        fontFamily: 'Raleway-Bold',
         color: '#422c81',
-        fontWeight: 'bold',
     },
     cardImage: {
         width: 90,

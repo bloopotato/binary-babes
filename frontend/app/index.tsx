@@ -1,14 +1,18 @@
 import { Text, View, StyleSheet } from 'react-native';
-
+import { useFonts } from 'expo-font';
 
 import Button from '@/components/Button';
 import ImageViewer from '@/components/ImageViewer';
 
 const PlaceholderImage = require('@/assets/images/Lifesavers-Bust.png')
 
+
+
+
 export default function Index() {
   return (
     <View style={styles.container}>
+      
       <View style={styles.textContainer}>
         <Text style={styles.text}>Welcome to</Text>
         <Text style={styles.textTitle}>Self Care</Text>
@@ -47,9 +51,8 @@ const styles = StyleSheet.create({
   },
   text: {
     color: '#432C81',
-    fontFamily: "Raleway",
     fontSize: 20,
-    fontWeight: 'bold',
+    fontFamily: 'Raleway-Bold',
     lineHeight: 26, 
     wordWrap: 'break-word',
   },
@@ -57,8 +60,7 @@ const styles = StyleSheet.create({
     textAlign: 'center', 
     color: '#432C81', 
     fontSize: 32, 
-    fontFamily: 'Raleway',
-    fontWeight: 'bold',
+    fontFamily: 'Raleway-Bold',
     lineHeight: 42, 
     wordWrap: 'break-word',
   },

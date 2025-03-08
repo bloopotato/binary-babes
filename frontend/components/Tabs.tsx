@@ -27,7 +27,7 @@ export default function LifestyleTab({ label, subLabel = 'Click here', href, wid
           }
         }}
       >
-        <Text style={styles.tabLabel}>{label}</Text>
+        <Text style={styles.tabLabelText}>{label}</Text>
         <View style={styles.subLabelContainer}>
           <Text style={styles.subLabelText}>{subLabel}</Text>
         </View>
@@ -44,31 +44,26 @@ const styles = StyleSheet.create({
   },
   tab: {
     alignItems: 'flex-start',
-    justifyContent: 'flex-start',
+    justifyContent: 'center',
     borderRadius: 12,
     backgroundColor: '#FFF',
     shadowColor: '#432C81',
     elevation: 5,
-    paddingHorizontal: 10
-  },
-  tabLabel: {
-    fontSize: 18,
-    fontFamily: 'Raleway',
-    paddingTop: 24,
     paddingHorizontal: 16,
+    paddingVertical: 24
+  },
+  tabLabelText: {
+    fontSize: 16,
+    fontFamily: 'Raleway',
     color: '#432C81',
-    fontWeight: 'bold',
   },
   subLabelContainer: {
-    position: 'absolute',
-    left: 10,
-    bottom: 30,
+    paddingTop: 8,
     justifyContent: 'flex-start'
   },
   subLabelText: {
     fontSize: 12,
     fontFamily: 'Raleway',
     color: '#A095C1',
-    paddingHorizontal: 16,
   }
 });

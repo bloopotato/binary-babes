@@ -1,5 +1,5 @@
 import React, { useState, useRef } from "react";
-import { View, Text, StyleSheet, FlatList, Animated, ViewToken, TouchableOpacity } from "react-native";
+import { View, StyleSheet, FlatList, Animated, ViewToken } from "react-native";
 import { useRouter } from "expo-router";
 
 import slides from "@/app/onboarding/slides";
@@ -63,6 +63,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1, 
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        paddingBottom: 10
     }
 })

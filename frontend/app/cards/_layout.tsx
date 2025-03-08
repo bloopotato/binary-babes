@@ -1,15 +1,21 @@
-import { Stack  } from 'expo-router';
+import { Stack } from 'expo-router';
 
-export default function MainLayout() {
+export default function ScreenLayout() {
 
   return (
-    <Stack>
+    <Stack
+      screenOptions={{
+        headerTitleStyle: {
+          fontFamily: 'Raleway-Bold'
+        }
+      }}
+    >
       <Stack.Screen 
         name='chatbot'
         options={{
           headerTitle: 'Chatbot',
           headerShadowVisible: false,
-          headerTintColor: '#432C81'
+          headerTintColor: '#432C81',
         }}
       />
       <Stack.Screen 

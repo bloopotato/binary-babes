@@ -86,9 +86,8 @@ const styles = StyleSheet.create({
     shadowRadius: 2,
   },
   labelText: {
-    fontFamily: 'Raleway',
+    fontFamily: 'Raleway-Bold',
     fontSize: 12,
-    fontWeight: 'bold',
     color: '#432C81',
   },
 });
