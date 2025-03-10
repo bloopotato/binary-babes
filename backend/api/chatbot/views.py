@@ -5,7 +5,11 @@ from rest_framework.response import Response
 from .serializers import ChatSessionSerializer, ChatMessageSerializer
 from rest_framework.permissions import IsAuthenticated
 from django.shortcuts import get_object_or_404
+from django.http import JsonResponse
 
+
+def index(request):
+    return JsonResponse({"chatbot okay"})
 
 @api_view(["GET"])
 @permission_classes([IsAuthenticated])
