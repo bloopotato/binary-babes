@@ -1,12 +1,29 @@
 import { View, StyleSheet, FlatList, Text, Image, TouchableOpacity } from 'react-native';
 import { useRouter } from 'expo-router';
+import { useState, useEffect } from 'react';
+import { fetchUserInfo } from '../main/api';
+
 import Card from '@/components/Card';
 
 const profileIcon = require('@/assets/images/profile.jpg');
 
 export default function HomeScreen() {
-  const username = "Julia";
+  const user_name = "Julia";
+  const [username, setUsername] = useState(null);
   const router = useRouter();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const user = await fetchUserInfo();
+        setUsername(user);
+      } catch (error) {
+        console.error('Error fetching user info:', error);
+      }
+    };
+
+    fetchData(); 
+  }, []);
 
   const lifestyleImage = require('@/assets/images/plant.png');
   const treatmentImage = require('@/assets/images/treatment.png');

@@ -1,4 +1,6 @@
 import { Text, View, StyleSheet, Image } from 'react-native';
+import { logoutUser } from '../main/api';
+import { useRouter } from 'expo-router';
 
 import Option from '@/components/Option';
 
@@ -7,6 +9,16 @@ const profileIcon = require('@/assets/images/profile.jpg');
 export default function Settings() {
   const username = "Julia Mario";
   const email = "juliamario@mail.com";
+
+  const router = useRouter();
+  const handleLogout = async () => {
+    try {
+      await logoutUser(); 
+      router.push('/'); 
+    } catch (error) {
+      console.error('Logout failed:', error);
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -27,7 +39,7 @@ export default function Settings() {
         <Option label='Privacy & Security' ionicon='shield' />
         <Option label='Sound' ionicon='volume-medium' />
         <Option label='Language' ionicon='earth' />
-        <Option label='Logout' ionicon='exit' href='/' />
+        <Option label='Logout' ionicon='exit' href='/' onPress={handleLogout}/>
       </View>
     </View>
   );

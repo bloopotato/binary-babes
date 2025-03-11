@@ -1,6 +1,7 @@
 import { Text, View, StyleSheet, TouchableOpacity, Keyboard } from 'react-native';
 import { useState } from 'react';
 import { useRouter } from 'expo-router';
+import { signupUser } from './api'; // Import signup function
 
 import Button from '@/components/Button';
 import CustomTextInput from '@/components/InputBox';
@@ -55,8 +56,13 @@ export default function Signup() {
     }
 
     if (valid) {
-      console.log('Signup successful');
-      router.push('./onboardingPage');
+      try {
+        const data = await signupUser(name, email, password);
+        console.log('Signup successful');
+        router.push('./onboardingPage');
+      } catch (err) {
+        console.error('Signup Error:', err);
+      }
     }
   };
 

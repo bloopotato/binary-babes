@@ -1,6 +1,7 @@
 import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
 import { useState } from 'react';
 import { useRouter } from 'expo-router';
+import { loginUser } from './api';
 
 import Button from '@/components/Button';
 import CustomTextInput from '@/components/InputBox';
@@ -12,7 +13,15 @@ export default function Login() {
   const router = useRouter();
 
   const handleLoginPress = async () => {
-    
+    setError('');
+
+    try {
+      const data = await loginUser(email, password);  // Ensure you're passing the correct fields here
+      console.log('Login successful:', data);
+      router.push('/(tabs)/home');
+    } catch (err) {
+      setError('Invalid credentials');
+    }
   };
 
   return (
