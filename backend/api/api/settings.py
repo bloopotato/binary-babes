@@ -83,7 +83,7 @@ DATABASES = {
    
 
 }
-DATABASE_ROUTERS = ['path.to.dbrouters.ChatMessageRouter', 'path.to.dbrouters.ChatSessionRouter']
+
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
