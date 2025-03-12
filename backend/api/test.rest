@@ -1,0 +1,34 @@
+### Register a new user
+POST http://192.168.1.103:8080/register/
+Content-Type: application/json
+
+{
+  "username": "testuser",
+  "email": "testuser@example.com",
+  "password": "testpassword"
+}
+
+### Obtain JWT token
+POST http://192.168.1.103:8080/login/
+Content-Type: application/json
+
+{
+  "username": "q",
+  "password": "q"
+}
+
+### Refresh JWT token
+POST http://192.168.1.103:8080/token/refresh/
+Content-Type: application/json
+
+{
+  "refresh": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTc0MTg3NTUwNiwiaWF0IjoxNzQxNzg5MTA2LCJqdGkiOiJhMWNiZjQyMDJiZWI0ZDBlYmJhNmJkZWQ5MjUyMjNhNSIsInVzZXJfaWQiOjJ9.1D11TiuNdHeOcaD0-gtwxGZHvQFS-fxd7tTR4RiRyTQ"
+}
+
+### Access dashboard (requires authentication)
+GET http://192.168.1.103:8080/dashboard/
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQxNzg5NDM5LCJpYXQiOjE3NDE3ODkxMDYsImp0aSI6Ijg0OTI2M2U3M2I2ZTRjNmY4ZGZlN2VkZWVhY2EzMmRlIiwidXNlcl9pZCI6Mn0.SwH-2RKGRyTNHqJa6Q9W2tjvF-m36YyRtCBGZcGbmek
+
+###
+POST http://192.168.1.103:8080/chatbot/create_chat_session/
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQxNzk1NTE4LCJpYXQiOjE3NDE3OTUyMTgsImp0aSI6IjVjNzZkNjExNzQ2YzQ0ZGE5MTNjZmY0ODRjNzg5NTE0IiwidXNlcl9pZCI6M30.sDx3XMRMbgOik6CkgNX_KaoDYA0EsL82_VR9A4mKvE4

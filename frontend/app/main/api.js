@@ -61,23 +61,28 @@ export const fetchUserInfo = async () => {
   }
 };
 
-export const logoutUser = async () => {
+export const createChatSession = async () => {
   try {
     const token = await AsyncStorage.getItem('accessToken');
-    
-    if (token) {
-      await axios.post(`${BASE_URL}logout/`, {}, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
-
-      await AsyncStorage.removeItem('accessToken');   // Clear token and session data
-      await AsyncStorage.removeItem('refreshToken');
-
-      console.log("User logged out successfully.");
-    } else {
-      console.log("No token found for logout.");
-    }
+    const response = await axios.post(`${BASE_URL}chatbot/create_chat_session/`, {}, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    return response.data;
   } catch (error) {
-    console.error("Logout Error:", error);
+    console.error('Error creating chat session:', error);
+    throw error;
+  }
+};
+
+export const getChatSessions = async () => {
+  try {
+    const token = await AsyncStorage.getItem('accessToken');
+    const response = await axios.get(`${BASE_URL}chatbot/get_chat_session/`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching chat sessions:', error);
+    throw error;
   }
 };

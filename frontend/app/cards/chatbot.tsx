@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, TextInput, FlatList, StyleSheet, TouchableOpacity, Image } from 'react-native';
+import axios from 'axios';
+import { createChatSession } from '../main/api';
 
 const sendIcon = require('@/assets/images/send.png');
 const botIcon = require('@/assets/images/bot.png');
@@ -13,9 +15,32 @@ interface Message {
 const Chatbot = () => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [inputText, setInputText] = useState('');
+  const [sessionId, setSessionId] = useState<string | null>(null);
 
-  const handleSendMessage = () => {
-    if (!inputText) return;
+  useEffect(() => {
+    const createSession = async () => {
+      try {
+        const data = await createChatSession();
+        //setSessionId(data.data.id);  // Assuming the response contains session ID
+        //console.log('Session created:', data.data.id);
+      } catch (error) {
+        console.error('Error creating session:', error);
+      }
+    };
+    createSession();
+
+    // Initial bot message
+    const defaultMessage: Message = {
+      id: '0',
+      text: 'Hello, I\'m (Chatbot Name)! 👋 I\'m your personal health assistant. How can I help you?',
+      sender: 'bot',
+    };
+    setMessages([defaultMessage]);
+  }, []);
+
+  // Send message function
+  const handleSendMessage = async () => {
+    if (!inputText || !sessionId) return;
 
     const userMessage: Message = {
       id: `${new Date().getTime()}`,
@@ -26,27 +51,28 @@ const Chatbot = () => {
     setMessages((prevMessages) => [...prevMessages, userMessage]);
     setInputText('');
 
-    setTimeout(() => {
-      const botMessage: Message = {
-        id: `${new Date().getTime() + 1}`,
-        text: `${inputText}`,
-        sender: 'bot',
-      };
+    try {
+      // Send the message to the server
+      await axios.post('/chatbot/create_chat_message/', {
+        session_id: sessionId,
+        sender: 'user',
+        message: inputText,
+      });
 
-      setMessages((prevMessages) => [...prevMessages, botMessage]);
-    }, 1000);
+      // Simulate bot response
+      setTimeout(() => {
+        const botMessage: Message = {
+          id: `${new Date().getTime() + 1}`,
+          text: inputText,
+          sender: 'bot',
+        };
+
+        setMessages((prevMessages) => [...prevMessages, botMessage]);
+      }, 1000);
+    } catch (error) {
+      console.error('Error sending message:', error);
+    }
   };
-
-  // Initial bot message
-  useEffect(() => {
-    const defaultMessage: Message = {
-      id: '0',
-      text: 'Hello, I\'m (Chatbot Name)! 👋 I\'m your personal health assistant. How can I help you?',
-      sender: 'bot',
-    };
-
-    setMessages([defaultMessage]);
-  }, []);
 
   return (
     <View style={styles.container}>

@@ -16,5 +16,3 @@ class ChatMessage(models.Model):
     sender = models.CharField(max_length=4) 
     message = models.TextField(max_length=10000)
     time_sent = models.DateTimeField(auto_now_add=True)
-
-
