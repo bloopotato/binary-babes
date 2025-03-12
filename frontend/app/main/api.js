@@ -69,7 +69,7 @@ export const createChatSession = async () => {
     });
     return response.data;
   } catch (error) {
-    console.error('Error creating chat session:', error);
+    console.error('Error creating chat session:', error.response ? error.response.data : error.message);
     throw error;
   }
 };
@@ -77,12 +77,45 @@ export const createChatSession = async () => {
 export const getChatSessions = async () => {
   try {
     const token = await AsyncStorage.getItem('accessToken');
-    const response = await axios.get(`${BASE_URL}chatbot/get_chat_session/`, {
+    if (token) {
+      const response = await axios.get(`${BASE_URL}chatbot/get_chat_session/`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      return response.data;
+    } else {
+      console.log('No token found');
+    }
+  } catch (error) {
+    console.error('Error fetching chat sessions:', error.response ? error.response.data : error.message);
+    throw error;
+  }
+};
+
+export const getChatMessages = async (sessionId) => {
+  try {
+    const token = await AsyncStorage.getItem('accessToken');
+    const response = await axios.get(`${BASE_URL}chatbot/get_chat_message/${sessionId}/`, {
       headers: { Authorization: `Bearer ${token}` },
     });
     return response.data;
   } catch (error) {
-    console.error('Error fetching chat sessions:', error);
+    console.error('Error fetching chat messages:', error.response ? error.response.data : error.message);
+    throw error;
+  }
+};
+
+export const createChatMessage = async (sessionId, sender, message) => {
+  try {
+    const token = await AsyncStorage.getItem('accessToken');
+    const response = await axios.post(`${BASE_URL}chatbot/create_chat_message/${sessionId}/`, {
+      sender: sender,
+      message: message,
+    }, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error creating chat message:', error.response ? error.response.data : error.message);
     throw error;
   }
 };

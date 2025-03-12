@@ -31,16 +31,13 @@
           "imageWidth": 200,
           "resizeMode": "contain",
           "backgroundColor": "#ffffff"
-        }        
+        }
       ],
       [
         "expo-font",
         {
-          "Raleway": ["./assets/fonts/Raleway-VariableFont_wght.ttf"],
-          "Raleway-Reg": ["./assets/fonts/Raleway-Regular.ttf"],
-          "Raleway-Bold": ["./assets/fonts/Raleway-Bold.ttf"],
-          "Inter": ["./assets/fonts/Inter-VariableFont_opsz,wght.ttf"],
-          "Montserrat": ["./assets/fonts/Montserrat-VariableFont_wght.ttf"]
+          "Raleway": ["/assets/fonts/Raleway-Medium.ttf"],
+          "Raleway-Bold": ["/assets/fonts/Raleway-Bold.ttf"]
         }
       ]
     ],

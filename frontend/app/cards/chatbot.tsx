@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import { View, Text, TextInput, FlatList, StyleSheet, TouchableOpacity, Image } from 'react-native';
-import axios from 'axios';
-import { createChatSession } from '../main/api';
+import React, { useEffect, useState, useRef } from 'react';
+import { View, Text, TextInput, FlatList, StyleSheet, TouchableOpacity, Image, ActivityIndicator } from 'react-native';
+import { createChatSession, getChatMessages, getChatSessions, createChatMessage } from '../main/api'; // Make sure getChatSessions is imported
 
 const sendIcon = require('@/assets/images/send.png');
 const botIcon = require('@/assets/images/bot.png');
@@ -16,29 +15,57 @@ const Chatbot = () => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [inputText, setInputText] = useState('');
   const [sessionId, setSessionId] = useState<string | null>(null);
+  const [sessions, setSessions] = useState<any[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const flatListRef = useRef<FlatList>(null);
 
   useEffect(() => {
-    const createSession = async () => {
+    const fetchSessions = async () => {
+      setIsLoading(true);
       try {
-        const data = await createChatSession();
-        //setSessionId(data.data.id);  // Assuming the response contains session ID
-        //console.log('Session created:', data.data.id);
+        const existingSessions = await getChatSessions(); // Fetch existing chat sessions
+        setSessions(existingSessions);                    // Update the sessions state
+
+        if (existingSessions.length > 0) {                // There are existing sessions
+          const initialSessionId = existingSessions[0].session_id;
+          setSessionId(initialSessionId);
+
+          const initialMessages = await getChatMessages(initialSessionId);
+          setMessages(initialMessages.map((msg: any) => ({
+            id: msg.message_id,
+            text: msg.message,
+            sender: msg.sender,
+          })));
+        } else {  // Create new session since there is none
+          const data = await createChatSession();
+          setSessionId(data.session_id);  // Store session ID
+          const initialMessage = {
+            id: '0',
+            text: 'Hello, I\'m (Chatbot Name)! 👋 I\'m your personal health assistant. How can I help you?',
+            sender: 'bot' as "user" | "bot", // Ensure this is typed correctly
+          };
+          // Store initial message by chatbot
+          await createChatMessage(data.session_id, 'bot', initialMessage.text);
+          setMessages([initialMessage]);
+          
+          // When mapping messages
+          const initialMessages = await getChatMessages(sessionId);
+          setMessages(initialMessages.map((msg: any) => ({
+            id: msg.message_id,
+            text: msg.message,
+            sender: msg.sender as "user" | "bot", // Correct casting
+          })));
+        }
       } catch (error) {
-        console.error('Error creating session:', error);
+        console.error('Error fetching sessions or creating session:', error);
+      } finally {
+        setIsLoading(false);
       }
     };
-    createSession();
 
-    // Initial bot message
-    const defaultMessage: Message = {
-      id: '0',
-      text: 'Hello, I\'m (Chatbot Name)! 👋 I\'m your personal health assistant. How can I help you?',
-      sender: 'bot',
-    };
-    setMessages([defaultMessage]);
+    fetchSessions();
   }, []);
 
-  // Send message function
   const handleSendMessage = async () => {
     if (!inputText || !sessionId) return;
 
@@ -52,31 +79,38 @@ const Chatbot = () => {
     setInputText('');
 
     try {
-      // Send the message to the server
-      await axios.post('/chatbot/create_chat_message/', {
-        session_id: sessionId,
-        sender: 'user',
-        message: inputText,
-      });
+      // Send users message to server 
+      // Replace input text with bot response from bot API
+      const botResponse = await createChatMessage(sessionId, 'user', inputText);
+      const botMessage: Message = {
+        id: botResponse.message_id,
+        text: botResponse.message,
+        sender: 'bot',
+      };
+      // Save bot message
+      await createChatMessage(sessionId, 'bot', botMessage.text);
 
-      // Simulate bot response
-      setTimeout(() => {
-        const botMessage: Message = {
-          id: `${new Date().getTime() + 1}`,
-          text: inputText,
-          sender: 'bot',
-        };
-
-        setMessages((prevMessages) => [...prevMessages, botMessage]);
-      }, 1000);
+      setMessages((prevMessages) => [...prevMessages, botMessage]);
     } catch (error) {
       console.error('Error sending message:', error);
     }
   };
 
+  useEffect(() => {
+    if (flatListRef.current) {
+      flatListRef.current.scrollToEnd({ animated: true });
+    }
+  }, [messages]);
+
   return (
     <View style={styles.container}>
+      {isLoading && (
+        <View style={styles.loadingContainer}>
+          <ActivityIndicator size="large" color="#432C81" />
+        </View>
+      )}
       <FlatList
+        ref={flatListRef}
         data={messages}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
@@ -116,6 +150,12 @@ const styles = StyleSheet.create({
     padding: 16,
     backgroundColor: '#FFF',
   },
+  loadingContainer: {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: [{ translateX: -25 }, { translateY: -25 }],
+  },
   messageContainer: {
     flexDirection: 'row',
     marginVertical: 5,
@@ -127,7 +167,7 @@ const styles = StyleSheet.create({
   },
   botMessage: {
     alignSelf: 'flex-start',
-    justifyContent: 'flex-start'
+    justifyContent: 'flex-start',
   },
   messageBubble: {
     padding: 16,
@@ -136,23 +176,23 @@ const styles = StyleSheet.create({
     backgroundColor: '#432C81',
     borderTopLeftRadius: 24,
     borderTopRightRadius: 24,
-    borderBottomLeftRadius: 24
+    borderBottomLeftRadius: 24,
   },
   botBubble: {
     backgroundColor: '#EDECF4',
     borderTopRightRadius: 24,
     borderBottomLeftRadius: 24,
-    borderBottomRightRadius: 24
+    borderBottomRightRadius: 24,
   },
   messageText: {
     fontSize: 16,
-    fontFamily: 'Raleway'
+    fontFamily: 'Raleway',
   },
   botText: {
-    color: '#432C81'
+    color: '#432C81',
   },
   userText: {
-    color: '#EDECF4'
+    color: '#EDECF4',
   },
   inputContainer: {
     flexDirection: 'row',
@@ -170,7 +210,7 @@ const styles = StyleSheet.create({
     borderColor: '#432C81',
     fontFamily: 'Raleway',
     fontSize: 16,
-    color: '#432C81'
+    color: '#432C81',
   },
   sendButton: {
     width: 44,
@@ -180,7 +220,7 @@ const styles = StyleSheet.create({
     marginLeft: 16,
     backgroundColor: '#432C81',
     borderRadius: 22,
-    resizeMode: 'contain'
+    resizeMode: 'contain',
   },
   sendIcon: {
     width: 25,
@@ -193,12 +233,12 @@ const styles = StyleSheet.create({
     borderRadius: 16,
     marginRight: 8,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   botIcon: {
     width: 16,
     height: 16,
-  }
+  },
 });
 
 export default Chatbot;

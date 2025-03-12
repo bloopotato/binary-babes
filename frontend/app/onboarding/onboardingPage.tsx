@@ -3,7 +3,7 @@ import React, { useLayoutEffect } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { useNavigation } from 'expo-router';
 
-import Onboarding from '../onboarding/Onboarding';
+import Onboarding from './Onboarding';
 
 export default function OnboardingPage() {
     const navigation = useNavigation();
