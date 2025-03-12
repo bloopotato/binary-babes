@@ -5,10 +5,11 @@ type Props = {
   label: string;
   theme?: 'primary';
   href?: string;
+  replace?: boolean;
   onPress?: () => void;
 };
 
-export default function Button({ label, theme, href, onPress }: Props) {
+export default function Button({ label, theme, href, replace, onPress }: Props) {
     const router = useRouter();
   
     return (
@@ -22,7 +23,11 @@ export default function Button({ label, theme, href, onPress }: Props) {
           if (onPress) {
             onPress();
           } else if (href) {
-            router.push(href as any);
+            if (replace) {
+              router.replace(href as any);
+            } else {
+              router.push(href as any);
+            }
           }
         }}
       >

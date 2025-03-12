@@ -45,14 +45,12 @@ export default function Onboarding() {
             </View>
             <Paginator data={slides} scrollX={scrollX} />
 
-            {/* Show "Skip Tutorial" only if not on the last page */}
             {currentIndex < slides.length - 1 && (
-                <Button label="Skip Tutorial" href="/home" />
+                <Button label="Skip Tutorial" replace={true} href='/home' />
             )}
 
-            {/* Show "Let's Get Started" only on the last page */}
             {currentIndex === slides.length - 1 && (
-                <Button label="Let's Get Started" theme="primary" href="/home" />
+                <Button label="Let's Get Started" theme='primary' replace={true} href='/home' />
             )}
 
         </View>

@@ -1,7 +1,7 @@
 import { Text, View, StyleSheet, TouchableOpacity, Keyboard } from 'react-native';
 import { useState } from 'react';
 import { useRouter } from 'expo-router';
-import { signupUser } from './api'; // Import signup function
+import { fetchUserInfo, signupUser } from './api'; // Import signup function
 
 import Button from '@/components/Button';
 import CustomTextInput from '@/components/InputBox';
@@ -11,7 +11,6 @@ export default function Signup() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [isSubmitted, setIsSubmitted] = useState(false);
 
   const [nameError, setNameError] = useState('');
   const [emailError, setEmailError] = useState('');
@@ -22,9 +21,7 @@ export default function Signup() {
 
   const handleSignupPress = async () => {
     Keyboard.dismiss();
-    setIsSubmitted(true); // Mark form as submitted
     
-    // Validation checks
     let valid = true;
 
     if (!name) {
@@ -59,7 +56,9 @@ export default function Signup() {
       try {
         const data = await signupUser(name, email, password);
         console.log('Signup successful');
-        router.push('./onboardingPage');
+        const userInfo = await fetchUserInfo();
+        console.log('User Info:', userInfo);
+        router.replace('/onboarding/onboardingPage');
       } catch (err) {
         console.error('Signup Error:', err);
       }
@@ -103,14 +102,12 @@ export default function Signup() {
         errorMessage={confirmPasswordError}
       />
 
-      
-      
       <View style={styles.footerContainer}>
         <Button theme='primary' label='Sign Up' onPress={handleSignupPress} />
       </View>
       <View style={styles.loginContainer}>
         <Text style={styles.text}>Already have an account? </Text>
-        <TouchableOpacity onPress={() => router.push('/main/login')}>
+        <TouchableOpacity onPress={() => router.replace('/main/login')}>
             <Text style={[styles.text, styles.link]}>Login</Text>
         </TouchableOpacity>
       </View>

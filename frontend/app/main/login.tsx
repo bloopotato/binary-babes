@@ -1,26 +1,48 @@
-import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
+import { Text, View, StyleSheet, TouchableOpacity, Keyboard } from 'react-native';
 import { useState } from 'react';
 import { useRouter } from 'expo-router';
 import { loginUser } from './api';
+import { Axios } from 'axios';
 
 import Button from '@/components/Button';
 import CustomTextInput from '@/components/InputBox';
 
 export default function Login() {
-  const [email, setEmail] = useState('');
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+  const [usernameError, setUsernameError] = useState('');
+  const [passwordError, setPasswordError] = useState('');
   const router = useRouter();
 
   const handleLoginPress = async () => {
-    setError('');
+    Keyboard.dismiss();
+    
+    let valid = true;
 
-    try {
-      const data = await loginUser(email, password);  // Ensure you're passing the correct fields here
-      console.log('Login successful:', data);
-      router.push('/(tabs)/home');
-    } catch (err) {
-      setError('Invalid credentials');
+    if (!username) {
+      setUsernameError('Email is required.');
+      valid = false;
+    } else {
+      setUsernameError('');
+    }
+
+    if (!password) {
+      setPasswordError('Password is required.');
+      valid = false;
+    } else {
+      setPasswordError('');
+    }
+
+    if (valid) {
+      try {
+        const data = await loginUser(username, password);
+        console.log('Login successful');
+        router.replace('/home');
+      } catch (err) {
+        console.error('Login Error:', err);
+        setUsernameError('Invalid username or password');
+        setPasswordError('Invalid username or password');
+      }
     }
   };
 
@@ -29,25 +51,27 @@ export default function Login() {
       <Text style={styles.subheader}>Welcome back</Text>
       <Text style={styles.header}>Login</Text>
       <CustomTextInput
-        value={email}
-        onChangeText={setEmail}
-        placeholder='Email'
+        value={username}
+        onChangeText={setUsername}
+        placeholder='Username'
+        error={usernameError !== ''}
+        errorMessage={usernameError}
       />
       <CustomTextInput
         value={password}
         onChangeText={setPassword}
         secureTextEntry={true}
         placeholder='Password'
+        error={passwordError !== ''}
+        errorMessage={passwordError}
       />
-
-      {error ? <Text style={styles.errorMessage}>{error}</Text> : null }
       
       <View style={styles.footerContainer}>
         <Button theme='primary' label='Login' onPress={handleLoginPress} />
       </View>
       <View style={styles.signupContainer}>
         <Text style={styles.text}>Don't have an account? </Text>
-          <TouchableOpacity onPress={() => router.push('/main/signup')}>
+          <TouchableOpacity onPress={() => router.replace('/main/signup')}>
             <Text style={[styles.text, styles.link]}>Sign Up</Text>
           </TouchableOpacity>
       </View>

@@ -1,24 +1,29 @@
 import { Text, View, StyleSheet, Image } from 'react-native';
-import { logoutUser } from '../main/api';
-import { useRouter } from 'expo-router';
+import React, { useEffect, useState } from 'react';
+import { fetchUserInfo } from '../main/api';
 
 import Option from '@/components/Option';
 
 const profileIcon = require('@/assets/images/profile.jpg');
 
 export default function Settings() {
-  const username = "Julia Mario";
-  const email = "juliamario@mail.com";
 
-  const router = useRouter();
-  const handleLogout = async () => {
-    try {
-      await logoutUser(); 
-      router.push('/'); 
-    } catch (error) {
-      console.error('Logout failed:', error);
-    }
-  };
+  const [username, setUsername] = useState(null);
+  const [email, setEmail] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await fetchUserInfo();
+        setUsername(data.username);
+        setEmail(data.email);
+      } catch (error) {
+        console.error('Error fetching user info:', error);
+      }
+    };
+
+    fetchData(); 
+  }, []);
 
   return (
     <View style={styles.container}>
@@ -39,7 +44,7 @@ export default function Settings() {
         <Option label='Privacy & Security' ionicon='shield' />
         <Option label='Sound' ionicon='volume-medium' />
         <Option label='Language' ionicon='earth' />
-        <Option label='Logout' ionicon='exit' href='/' onPress={handleLogout}/>
+        <Option label='Logout' ionicon='exit' replace={true} href='/' />
       </View>
     </View>
   );

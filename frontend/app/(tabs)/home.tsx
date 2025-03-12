@@ -15,8 +15,8 @@ export default function HomeScreen() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const user = await fetchUserInfo();
-        setUsername(user);
+        const data = await fetchUserInfo();
+        setUsername(data.username);
       } catch (error) {
         console.error('Error fetching user info:', error);
       }
@@ -35,18 +35,18 @@ export default function HomeScreen() {
     { name: 'Lifestyle & Medical History', key: '1', route: '/cards/lifestyle-medical', image: lifestyleImage },
     { name: 'Treatment', key: '2', route: '/cards/treatment', image: treatmentImage },
     { name: 'ChatBot', key: '3', route: '/cards/chatbot', image: chatbotImage },
-    { name: 'Help', key: '4', image: helpImage },
+    { name: 'Help', key: '4', route: '/onboarding/onboardingPage', image: helpImage },
     { name: 'About', key: '5', image: aboutImage }
   ];
 
   const goToProfile = () => {
-    router.push('./settings');
+    router.replace('./settings');
   }
 
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.headerText}>👋 Hi {username}!</Text>
+        <Text style={styles.headerText}>👋 Welcome {username}!</Text>
         <TouchableOpacity style={styles.profileCircle} onPress={goToProfile}>
           <Image source={profileIcon} style={styles.profileImage} />
         </TouchableOpacity>

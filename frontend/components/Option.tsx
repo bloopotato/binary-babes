@@ -16,11 +16,12 @@ type IoniconName =
 type Props = {
   label: string;
   ionicon: IoniconName;
+  replace?: boolean;
   href?: string;
   onPress?: () => void;
 };
 
-export default function Option({ label, ionicon, href, onPress }: Props) {
+export default function Option({ label, ionicon, replace, href, onPress }: Props) {
   const router = useRouter();
 
   return (
@@ -30,7 +31,12 @@ export default function Option({ label, ionicon, href, onPress }: Props) {
         if (onPress) {
           onPress();
         } else if (href) {
-          router.push(href as any);
+          if (replace) {
+            router.replace('/');
+            setTimeout(() => router.back(), 100);
+          } else {
+            router.push(href as any);
+          }
         }
       }}
     >

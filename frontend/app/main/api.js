@@ -1,13 +1,15 @@
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-const BASE_URL = 'http://10.91.67.103:8080/api/';
+const BASE_URL = 'http://192.168.1.103:8080/'; 
 
-export const loginUser = async (email, password) => {
+export const loginUser = async (username, password) => {
   try {
     const response = await axios.post(`${BASE_URL}login/`, {
-      username: email,
+      username: username,
       password: password,
     });
+    await AsyncStorage.setItem('accessToken', response.data.access);
+    await AsyncStorage.setItem('refreshToken', response.data.refresh);
     return response.data;
   } catch (error) {
     console.error('Login Error:', error);
@@ -15,35 +17,38 @@ export const loginUser = async (email, password) => {
   }
 };
 
-export const signupUser = async (name, email, password) => {
+export const signupUser = async (username, email, password) => {
   try {
-    const response = await axios.post(`${BASE_URL}signup/`,{
-      username: email,
+    const response = await axios.post(`${BASE_URL}register/`, {
+      username: username,
+      email: email,
       password: password,
     });
+    await AsyncStorage.setItem('accessToken', response.data.access);
+    await AsyncStorage.setItem('refreshToken', response.data.refresh);
     return response.data;
   } catch (error) {
     console.error('Signup Error:', error);
     throw error;
   }
-}
+};
 
 export const fetchUserInfo = async () => {
   try {
-    const token = await AsyncStorage.getItem('authToken');
+    const token = await AsyncStorage.getItem('accessToken');
     
     if (token) {
-      const response = await fetch(`${BASE_URL}user_info/`, {
+      const response = await fetch(`${BASE_URL}dashboard/`, {
         method: 'GET',
         headers: {
-          'Authorization': `Token ${token}`,
+          'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json',
         },
       });
 
       if (response.ok) {
         const data = await response.json();
-        return data.username; // Return username from the 'user' object
+        return data; // Return the welcome message
       } else {
         console.error('Error fetching user info:', response.statusText);
       }
@@ -58,18 +63,15 @@ export const fetchUserInfo = async () => {
 
 export const logoutUser = async () => {
   try {
-    // Optionally, make an API call to invalidate the token on the server
-    const token = await AsyncStorage.getItem('authToken');
+    const token = await AsyncStorage.getItem('accessToken');
     
     if (token) {
-      // You can call an endpoint like `/logout/` or `/invalidate_token/` to invalidate the token on the server side
       await axios.post(`${BASE_URL}logout/`, {}, {
-        headers: { Authorization: `Token ${token}` }
+        headers: { Authorization: `Bearer ${token}` }
       });
 
-      // Clear the token and any other session data from AsyncStorage
-      await AsyncStorage.removeItem('authToken');
-      await AsyncStorage.removeItem('username');
+      await AsyncStorage.removeItem('accessToken');   // Clear token and session data
+      await AsyncStorage.removeItem('refreshToken');
 
       console.log("User logged out successfully.");
     } else {
