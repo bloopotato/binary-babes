@@ -1,12 +1,11 @@
-import { Text, View, StyleSheet } from 'react-native';
-import { useFonts } from 'expo-font';
+import { Text, View, StyleSheet, LogBox } from 'react-native';
 
 import Button from '@/components/Button';
 import ImageViewer from '@/components/ImageViewer';
 
 const PlaceholderImage = require('@/assets/images/Lifesavers-Bust.png')
 
-
+LogBox.ignoreAllLogs(true);
 
 
 export default function Index() {

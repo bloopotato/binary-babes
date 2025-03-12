@@ -23,41 +23,48 @@ const Chatbot = () => {
     const fetchSessions = async () => {
       setIsLoading(true);
       try {
-        const existingSessions = await getChatSessions(); // Fetch existing chat sessions
+        const existingSessions = await getChatSessions(); // (1) Fetch existing chat sessions
         setSessions(existingSessions);                    // Update the sessions state
 
         if (existingSessions.length > 0) {                // There are existing sessions
           const initialSessionId = existingSessions[0].session_id;
           setSessionId(initialSessionId);
-
+          
+          // (2) Retrieve previous chats
           const initialMessages = await getChatMessages(initialSessionId);
           setMessages(initialMessages.map((msg: any) => ({
             id: msg.message_id,
             text: msg.message,
             sender: msg.sender,
           })));
-        } else {  // Create new session since there is none
+        } else { // Handle as case not error
+          throw new Error("No sessions found");
+        }
+      } catch (error) {
+        console.error('Error fetching sessions or creating session:', error);
+        try { // (3) Create new session since there is none
           const data = await createChatSession();
           setSessionId(data.session_id);  // Store session ID
           const initialMessage = {
             id: '0',
             text: 'Hello, I\'m (Chatbot Name)! 👋 I\'m your personal health assistant. How can I help you?',
-            sender: 'bot' as "user" | "bot", // Ensure this is typed correctly
+            sender: 'bot' as "user" | "bot", 
           };
           // Store initial message by chatbot
           await createChatMessage(data.session_id, 'bot', initialMessage.text);
           setMessages([initialMessage]);
           
-          // When mapping messages
-          const initialMessages = await getChatMessages(sessionId);
-          setMessages(initialMessages.map((msg: any) => ({
-            id: msg.message_id,
-            text: msg.message,
-            sender: msg.sender as "user" | "bot", // Correct casting
-          })));
+          if (data?.session_id) {  // Ensure sessionId is valid before fetching messages
+            const initialMessages = await getChatMessages(data.session_id);
+            setMessages(initialMessages.map((msg: any) => ({
+              id: msg.message_id,
+              text: msg.message,
+              sender: msg.sender as "user" | "bot",
+            })));
+          }
+        } catch (createError) {
+          console.error("Error creating new chat session:", createError);
         }
-      } catch (error) {
-        console.error('Error fetching sessions or creating session:', error);
       } finally {
         setIsLoading(false);
       }
@@ -79,7 +86,7 @@ const Chatbot = () => {
     setInputText('');
 
     try {
-      // Send users message to server 
+      // (4) Send users message to server 
       // Replace input text with bot response from bot API
       const botResponse = await createChatMessage(sessionId, 'user', inputText);
       const botMessage: Message = {
@@ -87,7 +94,7 @@ const Chatbot = () => {
         text: botResponse.message,
         sender: 'bot',
       };
-      // Save bot message
+      // (5) Send bot message to server
       await createChatMessage(sessionId, 'bot', botMessage.text);
 
       setMessages((prevMessages) => [...prevMessages, botMessage]);
@@ -96,6 +103,7 @@ const Chatbot = () => {
     }
   };
 
+  // Scroll to bottom of chat
   useEffect(() => {
     if (flatListRef.current) {
       flatListRef.current.scrollToEnd({ animated: true });

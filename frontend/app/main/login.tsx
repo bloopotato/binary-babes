@@ -2,7 +2,6 @@ import { Text, View, StyleSheet, TouchableOpacity, Keyboard } from 'react-native
 import { useState } from 'react';
 import { useRouter } from 'expo-router';
 import { loginUser } from './api';
-import { Axios } from 'axios';
 
 import Button from '@/components/Button';
 import CustomTextInput from '@/components/InputBox';
@@ -39,7 +38,7 @@ export default function Login() {
         console.log('Login successful');
         router.replace('/home');
       } catch (err) {
-        console.error('Login Error:', err);
+        console.log('Login Error:', err);
         setUsernameError('Invalid username or password');
         setPasswordError('Invalid username or password');
       }

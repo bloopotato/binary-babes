@@ -23,7 +23,7 @@ export default function Signup() {
     Keyboard.dismiss();
     
     let valid = true;
-
+/*
     if (!name) {
       setNameError('Full Name is required.');
       valid = false;
@@ -43,12 +43,28 @@ export default function Signup() {
       valid = false;
     } else {
       setPasswordError('');
+    }*/
+
+    if (!name || !email || !password) {
+      setNameError('All fields are required');
+      setEmailError('All fields are required');
+      setPasswordError('All fields are required');
+      setConfirmPasswordError('All fields are required');
+      valid = false;
+      return;
+    } else {
+      setNameError('');
+      setEmailError('');
+      setPasswordError('');
+      setConfirmPasswordError('');
     }
 
     if (password !== confirmPassword) {
+      setPasswordError('Passwords do not match.');
       setConfirmPasswordError('Passwords do not match.');
       valid = false;
     } else {
+      setPasswordError('');
       setConfirmPasswordError('');
     }
 
@@ -59,8 +75,17 @@ export default function Signup() {
         const userInfo = await fetchUserInfo();
         console.log('User Info:', userInfo);
         router.replace('/onboarding/onboardingPage');
-      } catch (err) {
-        console.error('Signup Error:', err);
+      } catch (err: any) {
+        if (err.response && err.response.data && err.response.data.error) {
+          if (err.response.data.error === "Username already exists") {
+            setNameError('Username already exists');
+          } else {
+            setNameError(err.response.data.error);
+          }
+        } else {
+          console.error('Signup Error:', err);
+          setNameError('An unexpected error occurred. Please try again.');
+        }
       }
     }
   };
