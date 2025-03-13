@@ -13,8 +13,8 @@ POST http://192.168.0.53:8080/login/
 Content-Type: application/json
 
 {
-  "username": "testuser",
-  "password": "testpassword"
+  "username": "tester1",
+  "password": "applebanana123"
 }
 
 ### Refresh JWT token
@@ -44,8 +44,8 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiY
 }
 
 ###
-GET http://192.168.0.53:8080/health/health_metrics/0/
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQxODc1OTIyLCJpYXQiOjE3NDE4NzU2MjIsImp0aSI6IjkwZDJmMzIwMThkODQ1ODhhZWE2MzU2NzU4ODI4NTQwIiwidXNlcl9pZCI6M30.H0_mI1qvzgfOedLpiYilgUyCqWD4wXmd_ZkHadhH7zY
+GET http://192.168.0.53:8080/health/health-metrics/
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQxODc4OTQ1LCJpYXQiOjE3NDE4Nzg2NDUsImp0aSI6IjM5ZmI0MDY2ZTZmYzRhZDc5NzhkNGZiNzI0N2FjZjM0IiwidXNlcl9pZCI6MX0.qCjfyL9FhlBbm7glKdE3Pysn4nqPa7g2eFEDcsb7y_w
 
 ###
 POST http://192.168.0.53:8080/health/lifestyle-planner/

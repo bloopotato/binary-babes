@@ -51,13 +51,16 @@ def train_model():
 # Comment out the following line to prevent the model from training at import time.
 train_model()
 '''
+from rest_framework.decorators import permission_classes
+from rest_framework.permissions import IsAuthenticated
 
 @api_view(["GET"])
-def get_health_metrics(request, user_id):
+@permission_classes([IsAuthenticated])
+def get_health_metrics(request):
     """
     Retrieve all health metrics for a specific user
     """
-    metrics = HealthMetric.objects.filter(user_id=user_id)
+    metrics = HealthMetric.objects.filter(user_id=request.user.username)
     if metrics.exists():
         serializer = HealthMetricSerializer(metrics, many=True)  # Corrected TRUE -> True
         return Response(serializer.data)
@@ -66,8 +69,8 @@ def get_health_metrics(request, user_id):
 # Get your token from environment variables
 HF_API_TOKEN = os.environ.get("HF_API_TOKEN_1")
 # Choose a model hosted on Hugging Face (e.g., GPT-2 or any conversational model)
-MODEL_ID = "gpt2"  # Replace with your desired model id
-#MODEL_ID = "facebook/opt-1.3b"
+#MODEL_ID = "gpt2"  # Replace with your desired model id
+MODEL_ID = "facebook/opt-1.3b"
 
 @api_view(["POST"])
 def lifestyle_planner(request):
@@ -96,7 +99,7 @@ def lifestyle_planner(request):
         payload = {"inputs": prompt, "options": {"wait_for_model": True}}
         api_url = f"https://api-inference.huggingface.co/models/{MODEL_ID}"
 
-        response = requests.post(api_url, headers=headers, json=payload, timeout=60)
+        response = requests.post(api_url, headers=headers, json=payload, timeout=500)
         print("HF API Response:", response.status_code, response.text)  # Debugging step
 
         response.raise_for_status()

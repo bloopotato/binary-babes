@@ -31,10 +31,15 @@ export default function StatsScreen() {
       try {
         if (username) {
           const metricsData = await getHealthMetrics(username);
-          setMetrics(metricsData);
+          if (Array.isArray(metricsData)) {
+            setMetrics(metricsData);
+          } else {
+            setMetrics([]);
+          }
         }
       } catch (error) {
         console.error('Error fetching health metrics:', error);
+        setMetrics([]);
       } finally {
         setLoading(false);
       }
@@ -46,12 +51,13 @@ export default function StatsScreen() {
   }, [username]);
 
   if (loading) {
-    <View style={styles.loadingContainer}>
-      <ActivityIndicator size="large" color="#432C81" />
-    </View>
+    return (
+      <View style={styles.loadingContainer}>
+        <ActivityIndicator size="large" color="#432C81" />
+      </View>
+    );
   }
 
-  // If no metrics or if metrics are empty, show the message above the charts
   if (!metrics || metrics.length === 0) {
     return (
       <View style={styles.container}>
@@ -60,72 +66,28 @@ export default function StatsScreen() {
         </View>
         <ScrollView contentContainerStyle={styles.scrollViewContent}>
           <Text style={styles.noMetricsText}>No health metrics available</Text>
-          
-          {/* Render other charts below the "No health metrics available" message */}
-          <View style={styles.chart}>
-            <Text style={styles.title}>Chart 1</Text>
-            <LineChartComponent
-              data={[]}
-              width={283}
-              height={150}
-              lineColor='#432C81'
-            />
-          </View>
-          <View style={styles.chart}>
-            <Text style={styles.title}>Chart 2</Text>
-            <LineChartComponent
-              data={[]}
-              width={283}
-              height={150}
-              lineColor='#432C81'
-            />
-          </View>
-          <View style={styles.chart}>
-            <Text style={styles.title}>Chart 3</Text>
-            <LineChartComponent
-              data={[]}
-              width={283}
-              height={150}
-              lineColor='#432C81'
-            />
-          </View>
+
+          {[1, 2, 3].map((chart, index) => (
+            <View key={index} style={styles.chart}>
+              <Text style={styles.title}>{`Chart ${chart}`}</Text>
+              <LineChartComponent
+                data={[]}
+                width={283}
+                height={150}
+                lineColor='#432C81'
+              />
+            </View>
+          ))}
         </ScrollView>
       </View>
     );
   }
 
-  // If metrics are available, render the health metrics chart and other charts
+  // Map the health metrics for the chart
   const healthMetricsData = metrics.map((metric) => ({
     value: metric.value,
     date: metric.date,
   }));
-
-  const data1 = [
-    { value: 50, date: "Jan" },
-    { value: 80, date: "Feb" },
-    { value: 65, date: "Mar" },
-    { value: 90, date: "Apr" },
-    { value: 70, date: "May" },
-    { value: 100, date: "Jun" },
-  ];
-
-  const data2 = [
-    { value: 30, date: "Jan" },
-    { value: 60, date: "Feb" },
-    { value: 55, date: "Mar" },
-    { value: 80, date: "Apr" },
-    { value: 50, date: "May" },
-    { value: 75, date: "Jun" },
-  ];
-
-  const data3 = [
-    { value: 30, date: "Jan" },
-    { value: 60, date: "Feb" },
-    { value: 55, date: "Mar" },
-    { value: 80, date: "Apr" },
-    { value: 50, date: "May" },
-    { value: 75, date: "Jun" },
-  ];
 
   return (
     <View style={styles.container}>
@@ -143,33 +105,24 @@ export default function StatsScreen() {
           />
         </View>
 
-        <View style={styles.chart}>
-          <Text style={styles.title}>Chart 1</Text>
-          <LineChartComponent
-            data={data1}
-            width={283}
-            height={150}
-            lineColor='#432C81'
-          />
-        </View>
-        <View style={styles.chart}>
-          <Text style={styles.title}>Chart 2</Text>
-          <LineChartComponent
-            data={data2}
-            width={283}
-            height={150}
-            lineColor='#432C81'
-          />
-        </View>
-        <View style={styles.chart}>
-          <Text style={styles.title}>Chart 3</Text>
-          <LineChartComponent
-            data={data3}
-            width={283}
-            height={150}
-            lineColor='#432C81'
-          />
-        </View>
+        {[1, 2, 3].map((chart, index) => (
+          <View key={index} style={styles.chart}>
+            <Text style={styles.title}>{`Chart ${chart}`}</Text>
+            <LineChartComponent
+              data={[
+                { value: 30 + index * 10, date: "Jan" },
+                { value: 60 + index * 5, date: "Feb" },
+                { value: 55 + index * 8, date: "Mar" },
+                { value: 80 + index * 4, date: "Apr" },
+                { value: 50 + index * 7, date: "May" },
+                { value: 75 + index * 6, date: "Jun" },
+              ]}
+              width={283}
+              height={150}
+              lineColor='#432C81'
+            />
+          </View>
+        ))}
       </ScrollView>
     </View>
   );
@@ -222,9 +175,8 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   loadingContainer: {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: [{ translateX: -25 }, { translateY: -25 }],
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
