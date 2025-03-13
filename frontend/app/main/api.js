@@ -1,6 +1,6 @@
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-const BASE_URL = 'http://192.168.1.103:8080/'; 
+const BASE_URL = 'http://192.168.72.48:8080/'; 
 
 export const loginUser = async (username, password) => {
   try {
@@ -63,6 +63,7 @@ export const fetchUserInfo = async () => {
 
 export const createChatSession = async () => {
   try {
+    console.log('Creating chat session');
     const token = await AsyncStorage.getItem('accessToken');
     const response = await axios.post(`${BASE_URL}chatbot/create_chat_session/`, {}, {
       headers: { Authorization: `Bearer ${token}` },
@@ -76,6 +77,7 @@ export const createChatSession = async () => {
 
 export const getChatSessions = async () => {
   try {
+    console.log('Fetching chat sessions');
     const token = await AsyncStorage.getItem('accessToken');
     if (token) {
       const response = await axios.get(`${BASE_URL}chatbot/get_chat_session/`, {
@@ -93,6 +95,7 @@ export const getChatSessions = async () => {
 
 export const getChatMessages = async (sessionId) => {
   try {
+    console.log('Fetching chat messages');
     const token = await AsyncStorage.getItem('accessToken');
     const response = await axios.get(`${BASE_URL}chatbot/get_chat_message/${sessionId}/`, {
       headers: { Authorization: `Bearer ${token}` },
@@ -106,6 +109,7 @@ export const getChatMessages = async (sessionId) => {
 
 export const createChatMessage = async (sessionId, sender, message) => {
   try {
+    console.log('Creating chat message');
     const token = await AsyncStorage.getItem('accessToken');
     const response = await axios.post(`${BASE_URL}chatbot/create_chat_message/${sessionId}/`, {
       sender: sender,
