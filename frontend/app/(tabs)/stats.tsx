@@ -1,8 +1,7 @@
-import React, { useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import LineChartComponent from '@/components/LineChartComponent';
-
-import { getHealthMetrics } from '../main/api';
+import { fetchUserInfo, getHealthMetrics } from '../main/api';
 
 interface HealthMetric {
   value: number;
@@ -11,32 +10,93 @@ interface HealthMetric {
 
 export default function StatsScreen() {
   const [metrics, setMetrics] = useState<HealthMetric[] | null>(null);
-  const [loading, setLoading] = useState(true); 
+  const [loading, setLoading] = useState(true);
+  const [username, setUsername] = useState<string | null>(null);
 
-  const userId = '123'; 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await fetchUserInfo();
+        setUsername(data.username);
+      } catch (error) {
+        console.error('Error fetching user info:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   useEffect(() => {
     const fetchHealthMetrics = async () => {
       try {
-        const metricsData = await getHealthMetrics(userId); 
-        setMetrics(metricsData); 
+        if (username) {
+          const metricsData = await getHealthMetrics(username);
+          setMetrics(metricsData);
+        }
       } catch (error) {
         console.error('Error fetching health metrics:', error);
       } finally {
-        setLoading(false); 
+        setLoading(false);
       }
     };
 
-    fetchHealthMetrics();
-  }, [userId]); 
+    if (username) {
+      fetchHealthMetrics();
+    }
+  }, [username]);
 
   if (loading) {
     return <Text>Loading...</Text>;
   }
 
+  // If no metrics or if metrics are empty, show the message above the charts
   if (!metrics || metrics.length === 0) {
-    return <Text>No health metrics available</Text>;
+    return (
+      <View style={styles.container}>
+        <View style={styles.header}>
+          <Text style={styles.headerText}>Statistics</Text>
+        </View>
+        <ScrollView contentContainerStyle={styles.scrollViewContent}>
+          <Text style={styles.noMetricsText}>No health metrics available</Text>
+          
+          {/* Render other charts below the "No health metrics available" message */}
+          <View style={styles.chart}>
+            <Text style={styles.title}>Chart 1</Text>
+            <LineChartComponent
+              data={[]}
+              width={283}
+              height={150}
+              lineColor='#432C81'
+            />
+          </View>
+          <View style={styles.chart}>
+            <Text style={styles.title}>Chart 2</Text>
+            <LineChartComponent
+              data={[]}
+              width={283}
+              height={150}
+              lineColor='#432C81'
+            />
+          </View>
+          <View style={styles.chart}>
+            <Text style={styles.title}>Chart 3</Text>
+            <LineChartComponent
+              data={[]}
+              width={283}
+              height={150}
+              lineColor='#432C81'
+            />
+          </View>
+        </ScrollView>
+      </View>
+    );
   }
+
+  // If metrics are available, render the health metrics chart and other charts
+  const healthMetricsData = metrics.map((metric) => ({
+    value: metric.value,
+    date: metric.date,
+  }));
 
   const data1 = [
     { value: 50, date: "Jan" },
@@ -72,6 +132,16 @@ export default function StatsScreen() {
       </View>
       <ScrollView contentContainerStyle={styles.scrollViewContent}>
         <View style={styles.chart}>
+          <Text style={styles.title}>Health Metrics</Text>
+          <LineChartComponent
+            data={healthMetricsData}
+            width={283}
+            height={150}
+            lineColor='#432C81'
+          />
+        </View>
+
+        <View style={styles.chart}>
           <Text style={styles.title}>Chart 1</Text>
           <LineChartComponent
             data={data1}
@@ -100,7 +170,6 @@ export default function StatsScreen() {
         </View>
       </ScrollView>
     </View>
-    
   );
 }
 
@@ -120,7 +189,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     fontSize: 22,
     fontFamily: 'Raleway-Bold',
-    color: '#432C81'
+    color: '#432C81',
   },
   headerText: {
     fontSize: 22,
@@ -128,8 +197,8 @@ const styles = StyleSheet.create({
     color: '#432C81',
   },
   scrollViewContent: {
-    paddingVertical: 10, 
-    alignItems: 'center', 
+    paddingVertical: 10,
+    alignItems: 'center',
     backgroundColor: '#FFF',
   },
   chart: {
@@ -143,5 +212,11 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: '#432C81',
     marginBottom: 10,
+  },
+  noMetricsText: {
+    fontSize: 18,
+    color: '#FF0000',
+    fontFamily: 'Raleway-Bold',
+    marginBottom: 20,
   },
 });

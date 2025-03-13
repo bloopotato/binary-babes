@@ -44,8 +44,8 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiY
 }
 
 ###
-GET http://192.168.0.53:8080/health_metrics/1/
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQxODczMjk3LCJpYXQiOjE3NDE4NzI5OTcsImp0aSI6ImE4YTc5YTM3OWI5YzQ2OGNhNmU1NTc4MjhhNWRiYTYwIiwidXNlcl9pZCI6M30._2wG8fv_huVOOuPl8T2n4KWzFpFGxIhXrVqXLei7yuA
+GET http://192.168.0.53:8080/health/health_metrics/0/
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQxODc1OTIyLCJpYXQiOjE3NDE4NzU2MjIsImp0aSI6IjkwZDJmMzIwMThkODQ1ODhhZWE2MzU2NzU4ODI4NTQwIiwidXNlcl9pZCI6M30.H0_mI1qvzgfOedLpiYilgUyCqWD4wXmd_ZkHadhH7zY
 
 ###
 POST http://192.168.0.53:8080/health/lifestyle-planner/
