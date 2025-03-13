@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, ActivityIndicator } from 'react-native';
 import LineChartComponent from '@/components/LineChartComponent';
 import { fetchUserInfo, getHealthMetrics } from '../main/api';
 
@@ -46,7 +46,9 @@ export default function StatsScreen() {
   }, [username]);
 
   if (loading) {
-    return <Text>Loading...</Text>;
+    <View style={styles.loadingContainer}>
+      <ActivityIndicator size="large" color="#432C81" />
+    </View>
   }
 
   // If no metrics or if metrics are empty, show the message above the charts
@@ -218,5 +220,11 @@ const styles = StyleSheet.create({
     color: '#FF0000',
     fontFamily: 'Raleway-Bold',
     marginBottom: 20,
+  },
+  loadingContainer: {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: [{ translateX: -25 }, { translateY: -25 }],
   },
 });

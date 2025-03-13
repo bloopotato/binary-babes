@@ -32,7 +32,7 @@ export default function Option({ label, ionicon, replace, href, onPress }: Props
           onPress();
         } else if (href) {
           if (replace) {
-            router.replace('/');
+            router.replace('../');
             setTimeout(() => router.back(), 100);
           } else {
             router.push(href as any);
