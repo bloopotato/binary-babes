@@ -1,8 +1,43 @@
-import React from 'react';
+import React, { useEffect, useState} from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import LineChartComponent from '@/components/LineChartComponent';
 
+import { getHealthMetrics } from '../main/api';
+
+interface HealthMetric {
+  value: number;
+  date: string;
+}
+
 export default function StatsScreen() {
+  const [metrics, setMetrics] = useState<HealthMetric[] | null>(null);
+  const [loading, setLoading] = useState(true); 
+
+  const userId = '123'; 
+
+  useEffect(() => {
+    const fetchHealthMetrics = async () => {
+      try {
+        const metricsData = await getHealthMetrics(userId); 
+        setMetrics(metricsData); 
+      } catch (error) {
+        console.error('Error fetching health metrics:', error);
+      } finally {
+        setLoading(false); 
+      }
+    };
+
+    fetchHealthMetrics();
+  }, [userId]); 
+
+  if (loading) {
+    return <Text>Loading...</Text>;
+  }
+
+  if (!metrics || metrics.length === 0) {
+    return <Text>No health metrics available</Text>;
+  }
+
   const data1 = [
     { value: 50, date: "Jan" },
     { value: 80, date: "Feb" },

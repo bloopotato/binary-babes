@@ -17,6 +17,7 @@ Including another URLconf
 from django.urls import path, include
 from api.views import register_user, MyTokenObtainPairView, dashboard
 from rest_framework_simplejwt.views import TokenRefreshView
+from django.contrib import admin
 
 urlpatterns = [
     path('register/', register_user, name='register'),
@@ -24,4 +25,6 @@ urlpatterns = [
     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('dashboard/', dashboard, name = 'dashboard'),
     path('chatbot/', include('chatbot.urls')),
+    path('admin/', admin.site.urls),
+    path('health/', include('healthAnalysis.urls')),
 ]

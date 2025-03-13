@@ -1,6 +1,6 @@
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-const BASE_URL = 'http://192.168.72.48:8080/'; 
+const BASE_URL = 'http://192.168.0.53:8080/'; 
 
 export const loginUser = async (username, password) => {
   try {
@@ -120,6 +120,32 @@ export const createChatMessage = async (sessionId, sender, message) => {
     return response.data;
   } catch (error) {
     console.error('Error creating chat message:', error.response ? error.response.data : error.message);
+    throw error;
+  }
+};
+
+export const getHealthMetrics = async (userId) => {
+  try {
+    const token = await AsyncStorage.getItem('accessToken');
+    
+    if (token) {
+      const response = await axios.get(`${BASE_URL}health/lifestyle-planner/${userId}/`, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (response.status === 200) {
+        return response.data; // Return health metrics
+      } else {
+        console.error('Error fetching health metrics:', response.statusText);
+      }
+    } else {
+      console.log('No token found');
+    }
+  } catch (error) {
+    console.error('Error fetching health metrics:', error.response ? error.response.data : error.message);
     throw error;
   }
 };

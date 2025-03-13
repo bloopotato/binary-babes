@@ -1,5 +1,5 @@
 ### Register a new user
-POST http://192.168.1.103:8080/register/
+POST http://192.168.0.53:8080/register/
 Content-Type: application/json
 
 {
@@ -9,16 +9,16 @@ Content-Type: application/json
 }
 
 ### Obtain JWT token
-POST http://192.168.1.103:8080/login/
+POST http://192.168.0.53:8080/login/
 Content-Type: application/json
 
 {
-  "username": "q",
-  "password": "q"
+  "username": "testuser",
+  "password": "testpassword"
 }
 
 ### Refresh JWT token
-POST http://192.168.1.103:8080/token/refresh/
+POST http://192.168.0.53:8080/token/refresh/
 Content-Type: application/json
 
 {
@@ -26,9 +26,35 @@ Content-Type: application/json
 }
 
 ### Access dashboard (requires authentication)
-GET http://192.168.1.103:8080/dashboard/
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQxNzg5NDM5LCJpYXQiOjE3NDE3ODkxMDYsImp0aSI6Ijg0OTI2M2U3M2I2ZTRjNmY4ZGZlN2VkZWVhY2EzMmRlIiwidXNlcl9pZCI6Mn0.SwH-2RKGRyTNHqJa6Q9W2tjvF-m36YyRtCBGZcGbmek
+GET http://192.168.0.53:8080/dashboard/
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQxODczMjk3LCJpYXQiOjE3NDE4NzI5OTcsImp0aSI6ImE4YTc5YTM3OWI5YzQ2OGNhNmU1NTc4MjhhNWRiYTYwIiwidXNlcl9pZCI6M30._2wG8fv_huVOOuPl8T2n4KWzFpFGxIhXrVqXLei7yuA
+
+### Create chat session
+POST http://192.168.0.53:8080/chatbot/create_chat_session/
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQxODczNTU2LCJpYXQiOjE3NDE4NzMyNTYsImp0aSI6ImIwZDQyZDkxYmQ4YjQ1NWI5Zjg1YTBkYWY3MGU5NTMzIiwidXNlcl9pZCI6M30.KdzgoFzAVraqL_Ja--77UFwuK3iKsRxQjuBgbry-NsU
+
+### Create chat message
+POST http://192.168.0.53:8080/chatbot/create_chat_message/3/
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQxODczNTU2LCJpYXQiOjE3NDE4NzMyNTYsImp0aSI6ImIwZDQyZDkxYmQ4YjQ1NWI5Zjg1YTBkYWY3MGU5NTMzIiwidXNlcl9pZCI6M30.KdzgoFzAVraqL_Ja--77UFwuK3iKsRxQjuBgbry-NsU
+
+{
+  "sender": "user",
+  "message": "Hello, this is a test message."
+}
 
 ###
-POST http://192.168.1.103:8080/chatbot/create_chat_session/
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQxNzk1NTE4LCJpYXQiOjE3NDE3OTUyMTgsImp0aSI6IjVjNzZkNjExNzQ2YzQ0ZGE5MTNjZmY0ODRjNzg5NTE0IiwidXNlcl9pZCI6M30.sDx3XMRMbgOik6CkgNX_KaoDYA0EsL82_VR9A4mKvE4
+GET http://192.168.0.53:8080/health_metrics/1/
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQxODczMjk3LCJpYXQiOjE3NDE4NzI5OTcsImp0aSI6ImE4YTc5YTM3OWI5YzQ2OGNhNmU1NTc4MjhhNWRiYTYwIiwidXNlcl9pZCI6M30._2wG8fv_huVOOuPl8T2n4KWzFpFGxIhXrVqXLei7yuA
+
+###
+POST http://192.168.0.53:8080/health/lifestyle-planner/
+Content-Type: application/json
+
+{
+  "avg_exercise_per_week": 3,
+  "avg_sleep_hours": 7,
+  "stress_level": 3,
+  "diet_quality": "Good",
+  "most_freq_substance_used": "Caffeine"
+}

@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'api',
     'chatbot',
+    'healthAnalysis',
 ]
 
 REST_FRAMEWORK = {
