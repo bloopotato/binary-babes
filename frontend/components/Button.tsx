@@ -24,7 +24,7 @@ export default function Button({ label, theme, href, replace, onPress }: Props) 
             onPress();
           } else if (href) {
             if (replace) {
-              router.back();
+              router.replace('/(tabs)/home');
             } else {
               router.push(href as any);
             }

@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-42*m&#k^)f@@39&27p_vdma&3^nfxm4iy$@n(e3)c1uk+rhhc8
 DEBUG = True
 
 # Add your IP address
-ALLOWED_HOSTS = ['192.168.1.103']
+ALLOWED_HOSTS = ['192.168.1.103','192.168.0.53']
 
 
 # Application definition
@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'api',
     'chatbot',
+    'healthAnalysis',
 ]
 
 REST_FRAMEWORK = {

@@ -14,7 +14,7 @@ export default function Index() {
       
       <View style={styles.textContainer}>
         <Text style={styles.text}>Welcome to</Text>
-        <Text style={styles.textTitle}>Self Care</Text>
+        <Text style={styles.textTitle}>ElevAite</Text>
       </View>
       
       {/*<View style={styles.imageContainer}>
