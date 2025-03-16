@@ -16,8 +16,8 @@
    - Add your ip address to ALLOWED_HOSTS
 
 2. Run backend using the ip address on different port
-   E.g. when you run frontend you get something like this: Metro waiting on exp://192.168.1.103:8081
+   E.g. when you run frontend you get something like this: Metro waiting on exp://xxx.xxx.xxx.xxx:8081
    Then run backend using
    ```bash
-   python manage.py runserver 192.168.1.103:8080
+   python manage.py runserver xxx.xxx.xxx.xxx:8080
    ```
